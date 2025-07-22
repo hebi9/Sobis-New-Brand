@@ -4,7 +4,9 @@ import Button from 'react-bootstrap/Button';
 import NavScrollExample from "../components/Navbar";
 import OrbitCarousel from "../components/OrbitCarousel";
 import Carrousel3D from '../components/Carrousel3D';
-
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import '../assets/css/Landing.css';
 
 
@@ -19,13 +21,29 @@ export default function Landing() {
 
       <div className="landing-container">
         <h2 className="text-end">“Convertiremos tus ideas en realidad”</h2>
-        <h1 className="mt-3 ml-3">Servicio de diseño <br />web en México</h1>
+        <Container fluid>
+          <Row>
+            <Col md={1}></Col>
+            <Col md={5}>
+            <h1 className="mt-3 ml-3">Servicio de diseño <br />web en México</h1>
+            </Col >
+            <Col md={5} className="ms-auto d-flex justify-content-end align-items-center">
+            <Button as={Link} to="/contacto" className="ui-btn   " style={ {textDecoration: "none", zIndex: "100"} }>
+                <span>Contactanos</span>
+            </Button>
+            </Col>
+            <Col md={1}></Col>
+          </Row>
+        </Container>
         <Carrousel3D />
         {/* <Button as={Link} to="/login" variant="primary">
           Iniciar sesión
         </Button> */}
         {/* <OrbitCarousel /> */}
       </div>
+      <Container >
+        <h2 className="">¿Quiénes somos?</h2>
+      </Container>
     </>
   );
 }
