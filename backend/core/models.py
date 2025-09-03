@@ -15,3 +15,19 @@ class Page(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class WhoWeAre(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class Methodology(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+
+    def __str__(self):
+        return self.title

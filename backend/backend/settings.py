@@ -5,8 +5,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 RAIZ_DEL_PROYECTO = BASE_DIR.parent
 
 SECRET_KEY = 'd44vyyh^6p$+a+1zdux3-ubdzn5!k+(md0@q!8du3e7&((1xzx'
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = [
+    'hebi.pythonanywhere.com',
+    "localhost:3000",
+    "127.0.0.1:3000",
+    "localhost:8000",        # <-- agrega esta línea
+    "127.0.0.1:8000",
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -18,8 +24,17 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_filters',
     'corsheaders',
+]
+
+INSTALLED_APPS += [
     'core',
+    'apps.finances',
+    'apps.relationship',
+    'apps.services',
+    'apps.quotes',
+    'apps.crm',
 ]
 
 MIDDLEWARE = [
@@ -31,6 +46,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://hebi.pythonanywhere.com',
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:8000",        # <-- agrega esta línea
+    "http://127.0.0.1:8000",        # <-- opcional, por si usas esta variante
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -82,5 +105,6 @@ CORS_ALLOW_ALL_ORIGINS = True
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'django_filters.rest_framework.DjangoFilterBackend',
     ),
 }

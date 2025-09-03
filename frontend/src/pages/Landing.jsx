@@ -9,6 +9,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../assets/css/Landing.css';
 
+import WhoWeAre from "../sections/WhoWeAre";
+import MainSlider from "../sections/MainSlider";
 
 export default function Landing() {
   return (
@@ -20,7 +22,7 @@ export default function Landing() {
       <NavScrollExample />
 
       <div className="landing-container">
-        <h2 className="text-end">“Convertiremos tus ideas en realidad”</h2>
+        <h2 className="text-end pt-5 pe-5" >“Convertiremos tus ideas en realidad”</h2>
         <Container fluid>
           <Row>
             <Col md={1}></Col>
@@ -28,22 +30,23 @@ export default function Landing() {
             <h1 className="mt-3 ml-3">Servicio de diseño <br />web en México</h1>
             </Col >
             <Col md={5} className="ms-auto d-flex justify-content-end align-items-center">
-            <Button as={Link} to="/contacto" className="ui-btn   " style={ {textDecoration: "none", zIndex: "100"} }>
+            <Button as={Link} to="/contacto" className="ui-btn" style={ {textDecoration: "none", zIndex: "100"} }>
                 <span>Contactanos</span>
             </Button>
             </Col>
             <Col md={1}></Col>
           </Row>
         </Container>
-        <Carrousel3D />
+        <MainSlider />
+
         {/* <Button as={Link} to="/login" variant="primary">
           Iniciar sesión
         </Button> */}
         {/* <OrbitCarousel /> */}
-      </div>
-      <Container >
-        <h2 className="">¿Quiénes somos?</h2>
+      <Container fluid style={{ backgroundColor: "#ffffffa2", color: "#000000"}}>
+        <WhoWeAre />
       </Container>
+      </div>
     </>
   );
 }
