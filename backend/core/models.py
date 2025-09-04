@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.text import slugify
-print("✅ models.py fue cargado")
 
 class Page(models.Model):
     title = models.CharField(max_length=200)

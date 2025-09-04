@@ -1,18 +1,26 @@
 from pathlib import Path
 import os
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 RAIZ_DEL_PROYECTO = BASE_DIR.parent
 
 SECRET_KEY = 'd44vyyh^6p$+a+1zdux3-ubdzn5!k+(md0@q!8du3e7&((1xzx'
-DEBUG = False
-ALLOWED_HOSTS = [
-    'hebi.pythonanywhere.com',
-    "localhost:3000",
-    "127.0.0.1:3000",
-    "localhost:8000",        # <-- agrega esta línea
-    "127.0.0.1:8000",
-]
+
+import environ
+
+env = environ.Env()
+environ.Env.read_env(BASE_DIR / ".env")
+
+DEBUG = env.bool("DEBUG", default=False)
+print("DEBUG:", DEBUG)
+if DEBUG:
+    ALLOWED_HOSTS = [
+        "localhost",
+        "127.0.0.1",
+    ]
+else:
+    ALLOWED_HOSTS = [
+        "hebi.pythonanywhere.com",
+    ]
 
 INSTALLED_APPS = [
     'django.contrib.admin',

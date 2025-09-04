@@ -16,7 +16,11 @@ export default function Dashboard() {
 
     try {
       const decoded = jwtDecode(token);
-      axios.get("http://localhost:8000/api/dashboard/", {
+      const API_BASE_URL =
+        window.location.hostname === "localhost"
+          ? "http://localhost:8000"
+          : "https://hebi.pythonanywhere.com";
+      axios.get(`${API_BASE_URL}/api/dashboard/`, {
         headers: { Authorization: `Bearer ${token}` }
       }).then(res => setMessage(res.data.message));
     } catch {

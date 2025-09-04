@@ -16,7 +16,8 @@ class Command(BaseCommand):
 
     def notify_google(self):
         # URL del sitemap en tu sitio
-        sitemap_url = "http://localhost:8000/sitemap.xml"  # Cambia esto si es necesario
+
+        sitemap_url = "https://hebi.pythonanywhere.com/sitemap.xml"  # Cambia esto si es necesario
        
         # Enviar la notificación a Google
         google_ping_url = f"http://www.google.com/ping?sitemap={sitemap_url}"
