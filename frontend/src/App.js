@@ -3,6 +3,9 @@ import Landing from "./pages/Landing";
 import Services from "./pages/Services";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Contact from "./pages/Contact";
+import ContactSuccess from "./pages/ContactSuccess";
+import NotFound from "./pages/404";
 
 function App() {
   return (
@@ -10,9 +13,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/servicios" element={<Services />} />
-        <Route path="/contacto" element={<Landing />} />
+        <Route path="/contacto" element={<Contact />} />
+        <Route path="/contacto/exito" element={<ContactSuccess />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

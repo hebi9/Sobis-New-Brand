@@ -1,5 +1,8 @@
 from rest_framework import viewsets, filters
 from django_filters.rest_framework import DjangoFilterBackend
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 from .models import Customer, Project, Category
 from .serializers import CustomerSerializer, ProjectSerializer, CategorySerializer
 
@@ -51,3 +54,21 @@ class CategoryViewSet(viewsets.ModelViewSet):
     filterset_fields = ["name"]
     search_fields = ["name"]
     ordering_fields = ["name", "created_at", "updated_at"]
+
+
+@csrf_exempt
+def get_contact_form(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            print("📩 Nuevo contacto recibido:")
+            print(f"Nombre: {data.get('nombre')}")
+            print(f"Asunto: {data.get('asunto')}")
+            print(f"Correo: {data.get('correo')}")
+            print(f"Descripción: {data.get('descripcion')}")
+            return JsonResponse({"message": "Datos recibidos correctamente"}, status=200)
+        except Exception as e:
+            print("❌ Error procesando datos:", str(e))
+            return JsonResponse({"error": "Error procesando datos"}, status=400)
+
+    return JsonResponse({"error": "Método no permitido"}, status=405)

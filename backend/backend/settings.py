@@ -17,9 +17,18 @@ if DEBUG:
         "localhost",
         "127.0.0.1",
     ]
+    CSRF_TRUSTED_ORIGINS = [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+    ]
 else:
     ALLOWED_HOSTS = [
         "hebi.pythonanywhere.com",
+    ]
+    CSRF_TRUSTED_ORIGINS = [
+        'http://hebi.pythonanywhere.com',
     ]
 
 INSTALLED_APPS = [
@@ -56,13 +65,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://hebi.pythonanywhere.com',
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://localhost:8000",        # <-- agrega esta línea
-    "http://127.0.0.1:8000",        # <-- opcional, por si usas esta variante
-]
+
 
 ROOT_URLCONF = 'backend.urls'
 

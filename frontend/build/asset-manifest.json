@@ -1,18 +1,19 @@
 {
   "files": {
     "main.css": "/static/css/main.b4c77131.css",
-    "main.js": "/static/js/main.8b65e355.js",
+    "main.js": "/static/js/main.153bd71b.js",
     "static/media/Banner Sobis.jpg": "/static/media/Banner Sobis.a66e3153fb2ffbfa6479.jpg",
     "static/media/img1.jpg": "/static/media/img1.a66e3153fb2ffbfa6479.jpg",
     "static/media/img2.jpg": "/static/media/img2.a66e3153fb2ffbfa6479.jpg",
     "static/media/img3.jpg": "/static/media/img3.a66e3153fb2ffbfa6479.jpg",
-    "static/media/logo.svg": "/static/media/logo.389a0df02bc755277db22dd28d9b8c00.svg",
+    "static/media/img4.jpg": "/static/media/img4.5e248f5148694d1ce02b.jpg",
+    "static/media/logo.svg": "/static/media/logo.6b979fb105d0d7f555e3e788f77d150b.svg",
     "index.html": "/index.html",
     "main.b4c77131.css.map": "/static/css/main.b4c77131.css.map",
-    "main.8b65e355.js.map": "/static/js/main.8b65e355.js.map"
+    "main.153bd71b.js.map": "/static/js/main.153bd71b.js.map"
   },
   "entrypoints": [
     "static/css/main.b4c77131.css",
-    "static/js/main.8b65e355.js"
+    "static/js/main.153bd71b.js"
   ]
 }
