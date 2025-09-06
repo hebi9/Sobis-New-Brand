@@ -74,6 +74,10 @@ class Customer(models.Model):
         if self.sobis_user:  # guarda el username del user actual
             self.sobis_username = self.sobis_user.get_username()
         super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return self.name
+
 
 
 class Category(models.Model):
@@ -130,6 +134,7 @@ class Project(models.Model):
     #category many2many (productos sobis [crm,landing, marketing, branding, erp])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deadline = models.DateField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.debt = self.total - self.paid
