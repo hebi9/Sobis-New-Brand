@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Contact from "./pages/Contact";
 import ContactSuccess from "./pages/ContactSuccess";
+import ProjectDetailsPage from './pages/ProjectDetailsPage';
 import NotFound from "./pages/404";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/contacto/exito" element={<ContactSuccess />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/proyectos/:projectId" element={<ProjectDetailsPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
