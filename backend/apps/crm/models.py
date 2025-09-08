@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.core.validators import FileExtensionValidator
+import uuid
+
 
 
 MEXICO_STATES = [
@@ -132,6 +134,8 @@ class Project(models.Model):
     quote = models.FileField(upload_to='quotes/', blank=True, null=True, validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
     categories = models.ManyToManyField(Category, related_name="projects", blank=True)
     #category many2many (productos sobis [crm,landing, marketing, branding, erp])
+    token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deadline = models.DateField(blank=True, null=True)
