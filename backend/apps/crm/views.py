@@ -7,6 +7,8 @@ from .models import Customer, Project, Category
 from .serializers import CustomerSerializer, ProjectSerializer, CategorySerializer
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404
+
 
 
 User = get_user_model()
@@ -60,6 +62,12 @@ class CategoryViewSet(viewsets.ModelViewSet):
     ordering_fields = ["name", "created_at", "updated_at"]
 
 
+def public_project_view(request, token):
+    project = get_object_or_404(Project, token=token)
+    serializer = ProjectSerializer(project)
+    return JsonResponse(serializer.data)
+    
+
 @csrf_exempt
 def get_contact_form(request):
     if request.method == "POST":
@@ -97,3 +105,45 @@ def send_email(nombre,asunto,correo,descripcion, request):
 
     except Exception:
         print("error al enviar correo")
+
+
+
+@csrf_exempt
+def send_project_link(request, project_id):
+    if request.method == "POST":
+        try:
+            project = get_object_or_404(Project, id=project_id)
+
+            # Asegurarse que tiene token (por si se migraron datos viejos sin token)
+            if not project.token:
+                import uuid
+                project.token = uuid.uuid4()
+                project.save()
+
+            # Construir URL absoluta
+            link = request.build_absolute_uri(
+                reverse('public_project_view', kwargs={'token': str(project.token)})
+            )
+
+            subject = f"Detalles de tu proyecto: {project.name}"
+            message = f"""
+Hola {project.customer.name},
+
+Gracias por tu interés. Puedes ver los detalles de tu proyecto y aceptar los términos y condiciones en el siguiente enlace:
+
+{link}
+
+Si tienes alguna duda, no dudes en contactarnos.
+
+Atentamente,
+Equipo de Sobi's Dev
+            """
+
+            send_mail(subject, message, "noreply@sobis.com", [project.customer.email])
+            return JsonResponse({"message": "Correo enviado correctamente."}, status=200)
+
+        except Exception as e:
+            print("❌ Error enviando correo:", e)
+            return JsonResponse({"error": "No se pudo enviar el correo."}, status=500)
+
+    return JsonResponse({"error": "Método no permitido"}, status=405)
