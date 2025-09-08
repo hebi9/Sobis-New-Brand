@@ -11,5 +11,6 @@ urlpatterns = [
     path('contacto/', get_contact_form, name='contacto'),
     path('project/send-link/<int:project_id>/', send_project_link, name='send_project_link'),
     path('project/public/<uuid:token>/', public_project_view, name='public_project_view'),
+    path('project/public/<uuid:token>/accept/', public_accept_terms, name='public_accept_terms'),
     path('', include(router.urls)),
 ]
