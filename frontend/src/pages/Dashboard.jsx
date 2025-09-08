@@ -82,7 +82,8 @@ export default function Dashboard() {
   PROJECT_STATUS.forEach(([key]) => {
     groupedProjects[key] = projects.filter((p) => p.status === key) || [];
   });
-
+  
+  const [dragging, setDragging] = useState(false);
   // Drag & Drop handlers
   const handleDragStart = (e, projectId) => {
     e.dataTransfer.setData("projectId", projectId);
@@ -198,7 +199,17 @@ export default function Dashboard() {
                     key={project.id}
                     className="mb-2 shadow-sm"
                     draggable
-                    onDragStart={(e) => handleDragStart(e, project.id.toString())}
+                    onDragStart={(e) => {
+                      setDragging(true);
+                      handleDragStart(e, project.id.toString());
+                    }}
+                    onDragEnd={() => setDragging(false)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (!dragging) {
+                        navigate(`/proyectos/${project.id}`);
+                      }
+                    }}
                   >
                     <Card.Body>
                       <Card.Title>{project.name}</Card.Title>
