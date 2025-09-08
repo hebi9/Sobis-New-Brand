@@ -129,12 +129,13 @@ class Project(models.Model):
         ],
         default='credit_card'
     )
-    terms = models.TextField(blank=True, null=True)
-    accepted_terms = models.BooleanField(default=False)
     quote = models.FileField(upload_to='quotes/', blank=True, null=True, validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
     categories = models.ManyToManyField(Category, related_name="projects", blank=True)
     #category many2many (productos sobis [crm,landing, marketing, branding, erp])
     token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    terms = models.TextField(blank=True, null=True)
+    accepted_terms = models.BooleanField(default=False)
+    accepted_at = models.DateTimeField(null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
