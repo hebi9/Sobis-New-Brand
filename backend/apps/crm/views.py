@@ -2,6 +2,7 @@ from rest_framework import viewsets, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 import json
 from .models import Customer, Project, Category
 from .serializers import CustomerSerializer, ProjectSerializer, CategorySerializer
@@ -66,7 +67,28 @@ def public_project_view(request, token):
     project = get_object_or_404(Project, token=token)
     serializer = ProjectSerializer(project)
     return JsonResponse(serializer.data)
-    
+
+@csrf_exempt
+@require_http_methods(["PATCH"])
+def public_accept_terms(request, token):
+    try:
+        project = Project.objects.get(token=token)
+
+        data = json.loads(request.body)
+        accepted = data.get("accepted_terms", False)
+
+        if accepted:
+            project.accepted_terms = True
+            project.accepted_at = now()
+            project.save()
+            return JsonResponse({"message": "Términos aceptados"}, status=200)
+        else:
+            return JsonResponse({"error": "Campo 'accepted_terms' requerido como true"}, status=400)
+
+    except Project.DoesNotExist:
+        return JsonResponse({"error": "Proyecto no encontrado"}, status=404)
+    except Exception as e:
+        return JsonResponse({"error": f"Error: {str(e)}"}, status=500)
 
 @csrf_exempt
 def get_contact_form(request):
