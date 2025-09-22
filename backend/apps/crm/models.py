@@ -132,7 +132,6 @@ class Project(models.Model):
     quote = models.FileField(upload_to='quotes/', blank=True, null=True, validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
     categories = models.ManyToManyField(Category, related_name="projects", blank=True)
     #category many2many (productos sobis [crm,landing, marketing, branding, erp])
-    token = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     terms = models.TextField(blank=True, null=True)
     accepted_terms = models.BooleanField(default=False)
     accepted_at = models.DateTimeField(null=True, blank=True)
@@ -141,10 +140,13 @@ class Project(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     deadline = models.DateField(blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        self.debt = self.total - self.paid
-        super().save(*args, **kwargs)
+    token = models.UUIDField(default=uuid.uuid4, editable=False, null=True, blank=True, unique=True)
 
     def __str__(self):
         return self.name
         
+    def save(self, *args, **kwargs):
+        if not self.token :  # si no hay token asignado
+            self.token = uuid.uuid4()
+        self.debt = self.total - self.paid
+        super().save(*args, **kwargs)

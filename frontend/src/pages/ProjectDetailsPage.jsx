@@ -3,6 +3,13 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import CustomerModal from '../components/CustomerModal';
 
+
+const API_BASE_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:8000"
+    : "https://hebi.pythonanywhere.com";
+
+
 const ProjectDetailsPage = () => {
   const { projectId } = useParams();
   const [project, setProject] = useState(null);
@@ -10,23 +17,35 @@ const ProjectDetailsPage = () => {
   const [loadingEmail, setLoadingEmail] = useState(false);
 
   useEffect(() => {
-    axios.get(`/api/projects/${projectId}/`)  // Asegúrate de que esta ruta exista
-      .then(res => setProject(res.data))
-      .catch(err => console.error('Error fetching project:', err));
-  }, [projectId]);
-
-  const sendEmailToClient = async () => {
-    setLoadingEmail(true);
+  const fetchProject = async () => {
     try {
-      await axios.post(`/api/project/send-link/${projectId}/`);
-      alert('Correo enviado al cliente');
+      const res = await fetch(`${API_BASE_URL}/api/crm/projects/${projectId}/`);
+      if (!res.ok) throw new Error('Error al obtener el proyecto');
+      const data = await res.json();
+      setProject(data);
     } catch (err) {
-      alert('Error al enviar el correo');
-      console.error(err);
-    } finally {
-      setLoadingEmail(false);
+      console.error('Error fetching project:', err);
     }
   };
+
+  fetchProject();
+}, [projectId]);
+
+const sendEmailToClient = async () => {
+  setLoadingEmail(true);
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/crm/project/send-link/${projectId}/`, {
+      method: "POST",
+    });
+    if (!res.ok) throw new Error('Error al enviar correo');
+    alert('Correo enviado al cliente');
+  } catch (err) {
+    alert('Error al enviar el correo');
+    console.error(err);
+  } finally {
+    setLoadingEmail(false);
+  }
+};
 
   if (!project) return <p>Cargando...</p>;
 
